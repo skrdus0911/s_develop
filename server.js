@@ -2,7 +2,7 @@ const net = require('net');
 const fs = require('fs');
 const path = require('path');
 
-console.log('server start');
+
 
 const checkContentType = (pathname) => {
   const type = path.parse(pathname);
@@ -34,7 +34,7 @@ const server = net.createServer((socket) => {
       pathname = '/index.html';
     }
 
-    fs.readFile(__dirname+pathname, (err, filedata) => {
+    fs.readFile(path.join(__dirname, '/public/', pathname), (err, filedata) => {
       if (err) {
         console.log(err);
         socket.write("HTTP/1.1 404");
@@ -53,6 +53,7 @@ const server = net.createServer((socket) => {
 });
 
 server.on('listening', () => {
+  console.log('server start');
   console.log('onListening');
 });
 
@@ -64,8 +65,8 @@ server.on('close', () => {
   console.log('client disconnected');
 });
 
-server.listen(3000, '127.0.0.1');
+server.listen(4400, '127.0.0.1');
 
-console.log('server close');
+
 
 
